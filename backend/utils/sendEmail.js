@@ -3,21 +3,23 @@ const nodeMailer = require('nodemailer')
 const sendEmail = async(options)=>{
 
     const transporter = nodeMailer.createTransport({
-        service:process.env.SMPT_SERVICE, //gmail
+        host:process.env.SMTP_HOST,
+        port:process.env.SMTP_PORT,
+        service:process.env.SMTP_SERVICE, //gmail
         auth:{
-            user:process.env.SMPT_MAIL,  //enter your email address
-            password:process.env.SMPT_PASSWORD//enter your email password
+            user:process.env.SMTP_MAIL,  //enter your email address
+            pass:process.env.SMTP_PASSWORD//enter your email password
         }
     })
 
     const mailOptions={
-        from:process.env.SMPT_MAIL,
+        from:process.env.SMTP_MAIL,
         to:options.email,
         subject:options.subject,
         text:options.message,
     }
 
-    await transporter.sendEmail(mailOptions);
+    await transporter.sendMail(mailOptions);
 }
 
 module.exports = sendEmail
